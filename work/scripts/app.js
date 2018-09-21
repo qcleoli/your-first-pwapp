@@ -315,6 +315,7 @@
   // TODO add startup code here
   app.selectedCities = localStorage.selectedCities;
   if(app.selectedCities) {
+    console.log('a', app.selectedCities)
     app.selectedCities = JSON.parse(app.selectedCities);
     app.selectedCities.forEach(function(city){
       app.getForecast(city.key, city.label);
