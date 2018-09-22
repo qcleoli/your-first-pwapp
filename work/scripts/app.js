@@ -170,6 +170,20 @@
         statement;
     // TODO add cache logic here
 
+    if('caches' in window){
+      caches.match(url).then(function(response){
+        if(response){
+          response.json().then(function updateFromCache(json){
+            var results = json.query.results;
+            results.key = key;
+            results.label = label;
+            results.created = json.query.created;
+            app.updateForecastCard(results);
+          })
+        }
+      })
+    }
+
     // Fetch the latest data.
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
@@ -329,4 +343,12 @@
   }
 
   // TODO add service worker code hered
+
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker
+            .register('./service-worker.js')
+            .then(function() {
+              console.log('Service Worker Registered');
+            })
+  }
 })();
